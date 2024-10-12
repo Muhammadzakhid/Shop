@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block content %}
+    <div class="container">
+        <h1>Search Results {% if query %} for "{{ query }}" {% endif %}</h1>
+        <div class="row py-5 row-gap-4">
+            {% for product in products %}
+            <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center">
+            <div class="card" style="width: 18rem;">
+              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+              <div class="card-body text-center">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <small>{{ product.create_at|date }}</small>
+                </div>
+                <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                <div class="d-flex justify-content-center">
+                  <a href="{% url 'product_detail' product.pk %}" class="btn btn-success">Go Detail</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+      <div class="d-flex justify-content-center">
+        <h1>No Products Found</h1>
+      </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
